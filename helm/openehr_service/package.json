@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "lint": "eslint apis headings lib spec utils/openehr --fix",
-    "test": "NODE_ENV=test jasmine --config=spec/support/jasmine.json",
+    "test": "TZ=Europe/London NODE_ENV=test jasmine --config=spec/support/jasmine.json",
     "test:debug": "DEBUG=helm:openehr* jasmine --config=spec/support/jasmine.json",
     "coverage": "nyc --reporter=html --reporter=text npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"

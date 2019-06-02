@@ -7,7 +7,5 @@ node_js:
   - '8'
 install:
   - make install
-before_script:
-  - export TZ=Europe/London
 script:
   - make test
