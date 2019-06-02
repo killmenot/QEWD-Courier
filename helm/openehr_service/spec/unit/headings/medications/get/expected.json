@@ -5,7 +5,7 @@
   "doseTiming": "some timing in period",
   "route": "another some route",
   "startDate": 1514808000000,
-  "startTime": 54000000,
+  "startTime": 43200000,
   "medicationCode": "some medication name code",
   "medicationTerminology": "some medication name terminology",
   "author": "John Doe",

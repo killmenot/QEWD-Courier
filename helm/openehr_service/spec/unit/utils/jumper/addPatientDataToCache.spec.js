@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  2 June 2019
+  3 June 2019
 
 */
 
@@ -83,10 +83,9 @@ describe('openehr-service/utils/jumper/lib/addPatientDataToCache', () => {
 
   it('should add patient data to cache', () => {
     const sourceId = 'ethercis-188a6bbe-d823-4fca-a79f-11c64af5c2e6';
-    const date = 1516009631000;
+    const date = 1516020431000;
 
     addPatientDataToCache.call(q, results, patientId, host, heading, qewdSessionData);
-
 
     const cacheBySourceId = headingCache.$(['bySourceId', sourceId]);
     expect(cacheBySourceId.getDocument()).toEqual({
@@ -94,7 +93,7 @@ describe('openehr-service/utils/jumper/lib/addPatientDataToCache', () => {
       patientId: 9999999000,
       heading: 'allergies',
       host: 'ethercis',
-      date: 1516009631000,
+      date: 1516020431000,
       jumperFormatData: {
         uid: '188a6bbe-d823-4fca-a79f-11c64af5c2e6::vm01.ethercis.org::1',
         context: {
