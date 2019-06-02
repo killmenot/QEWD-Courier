@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "lint": "eslint apis lib spec --fix",
-    "test": "TZ=Europe/London jasmine --config=spec/support/jasmine.json",
+    "test": "TZ=UTC jasmine --config=spec/support/jasmine.json",
     "coverage": "nyc --reporter=html --reporter=text jasmine --config=spec/support/jasmine.json",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
