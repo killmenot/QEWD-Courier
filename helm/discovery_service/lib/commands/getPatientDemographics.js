@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  13 February 2018
+  2 June 2019
 
 */
 
@@ -34,13 +34,9 @@ const { BadRequestError } = require('../errors');
 const { logger } = require('../core');
 const { isPatientIdValid } = require('../shared/validation');
 const { Role, ResourceName } = require('../shared/enums');
-const BaseCommand = require('./baseCommand');
-const debug = require('debug')('ripple-cdr-discovery:commands:get-demographics');
 
-class GetDemographicsCommand extends BaseCommand {
+class GetPatientDemographicsCommand {
   constructor(ctx, session) {
-    super();
-
     this.ctx = ctx;
     this.session = session;
   }
@@ -50,23 +46,19 @@ class GetDemographicsCommand extends BaseCommand {
    * @return {Promise.<Object>}
    */
   async execute(patientId) {
-    logger.info('commands/getDemographics|execute', { patientId });
-
-    debug('role: %s', this.session.role);
+    logger.info('commands/getPatientDemographics|execute', { patientId });
 
     if (this.session.role === Role.PHR_USER) {
       patientId = this.session.nhsNumber;
     }
 
-
     const patientValid = isPatientIdValid(patientId);
     if (!patientValid.ok) {
       throw new BadRequestError(patientValid.error);
     }
-  
+
     const { cacheService } = this.ctx.services;
     const cachedObj = cacheService.getDemographics(patientId);
-    debug('cached response: %j', cachedObj);
     if (cachedObj) {
       return cachedObj;
     }
@@ -75,10 +67,12 @@ class GetDemographicsCommand extends BaseCommand {
     await resourceService.fetchPatients(patientId);
     await resourceService.fetchPatientResources(patientId, ResourceName.PATIENT);
     const responseObj = demographicService.getByPatientId(patientId);
-    debug('response: %j', responseObj);
 
-    return responseObj;
+    return {
+      responseFrom: 'discovery_service',
+      results: responseObj
+    };
   }
 }
 
-module.exports = GetDemographicsCommand;
+module.exports = GetPatientDemographicsCommand;

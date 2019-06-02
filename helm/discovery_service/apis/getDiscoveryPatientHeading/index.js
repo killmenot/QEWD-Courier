@@ -23,28 +23,28 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  13 February 2019
+  2 June 2019
 
 */
 
 'use strict';
 
-const { GetHeadingSummaryCommand } = require('../../lib/commands');
+const { GetDiscoveryPatientHeadingCommand } = require('../../lib/commands');
 const { getResponseError } = require('../../lib/errors');
 
 /**
  * @param  {Object} args
  * @param  {Function} finished
  */
-module.exports = async function getDiscoveryPatientHeading (args, finished) {
+module.exports = async function getDiscoveryPatientHeading(args, finished) {
   try {
-    const command = new GetHeadingSummaryCommand(args.req.ctx, args.session);
+    const command = new GetDiscoveryPatientHeadingCommand(args.req.ctx, args.session);
     const responseObj = await command.execute(args.patientId, args.heading);
-    
+
     finished(responseObj);
   } catch (err) {
     const responseError = getResponseError(err);
-    
+
     finished(responseError);
   }
 };

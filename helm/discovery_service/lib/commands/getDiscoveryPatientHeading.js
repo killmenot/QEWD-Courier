@@ -24,28 +24,63 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  12 January 2018
+  2 June 2019
 
 */
 
 'use strict';
 
-class BaseCommand {
+const { BadRequestError } = require('../errors');
+const { logger } = require('../core');
+const { isHeadingValid, isPatientIdValid } = require('../shared/validation');
+const { Role } = require('../shared/enums');
 
-  constructor() {}
+class GetDiscoveryPatientHeadingCommand {
+  constructor(ctx, session) {
+    this.ctx = ctx;
+    this.session = session;
+  }
 
   /**
-   * Prepares data for response
-   *
-   * @param  {*} data
-   * @return {Object}
+   * @param  {string} patientId
+   * @param  {string} heading
+   * @return {Promise.<Object[]>}
    */
-  respond(data) {
+  async execute(patientId, heading) {
+    logger.info('commands/getDiscoveryPatientHeading|execute', { patientId, heading });
+
+    // override patientId for PHR Users - only allowed to see their own data
+    if (this.session.role === Role.PHR_USER) {
+      patientId = this.session.nhsNumber;
+    }
+
+    const patientValid = isPatientIdValid(patientId);
+    if (!patientValid.ok) {
+      throw new BadRequestError(patientValid.error);
+    }
+
+    // patientId = mapToDiscoveryNHSNo.call(this, patientId); // @TODO think about this method
+
+    const headingValid = isHeadingValid(this.ctx.headingsConfig, heading);
+    if (!headingValid.ok) {
+      return {
+        responseFrom: 'discovery_service',
+        results: []
+      };
+    }
+
+    const { resourceService, headingService } = this.ctx.services;
+    const resourceName = this.ctx.headingsConfig[heading];
+
+    await resourceService.fetchPatients(patientId);
+    await resourceService.fetchPatientResources(patientId, resourceName);
+    const resultObj = headingService.getSummary(patientId, heading);
+
     return {
       responseFrom: 'discovery_service',
-      results: data
+      results: resultObj
     };
   }
 }
 
-module.exports = BaseCommand;
+module.exports = GetDiscoveryPatientHeadingCommand;

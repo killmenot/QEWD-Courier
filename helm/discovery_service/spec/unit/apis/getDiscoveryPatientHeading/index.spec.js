@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 February 2019
+  2 June 2019
 
 */
 
@@ -33,14 +33,14 @@
 const mockery = require('mockery');
 const { ExecutionContextMock, CommandMock } = require('@tests/mocks');
 
-xdescribe('ripple-cdr-lib/lib/handlers/getHeadingSummary', () => {
+describe('discovery_service/apis/getDiscoveryPatientHeading', () => {
   let args;
   let finished;
   let command;
 
 
   let handler;
-  let GetHeadingSummaryCommand;
+  let GetDiscoveryPatientHeadingCommand;
 
   beforeAll(() => {
     mockery.enable({
@@ -66,11 +66,11 @@ xdescribe('ripple-cdr-lib/lib/handlers/getHeadingSummary', () => {
     finished = jasmine.createSpy();
 
     command = new CommandMock();
-    GetHeadingSummaryCommand = jasmine.createSpy().and.returnValue(command);
-    mockery.registerMock('../commands', { GetHeadingSummaryCommand });
+    GetDiscoveryPatientHeadingCommand = jasmine.createSpy().and.returnValue(command);
+    mockery.registerMock('../../lib/commands', { GetDiscoveryPatientHeadingCommand });
 
-    delete require.cache[require.resolve('@lib/handlers/getHeadingSummary')];
-    handler = require('@lib/handlers/getHeadingSummary');
+    delete require.cache[require.resolve('@apis/getDiscoveryPatientHeading')];
+    handler = require('@apis/getDiscoveryPatientHeading');
   });
 
   afterEach(() => {
@@ -87,7 +87,7 @@ xdescribe('ripple-cdr-lib/lib/handlers/getHeadingSummary', () => {
 
     await handler(args, finished);
 
-    expect(GetHeadingSummaryCommand).toHaveBeenCalledWith(args.req.ctx, args.session);
+    expect(GetDiscoveryPatientHeadingCommand).toHaveBeenCalledWith(args.req.ctx, args.session);
     expect(command.execute).toHaveBeenCalledWith(args.patientId, args.heading);
     expect(finished).toHaveBeenCalledWith(responseObj);
   });
@@ -97,7 +97,7 @@ xdescribe('ripple-cdr-lib/lib/handlers/getHeadingSummary', () => {
 
     await handler(args, finished);
 
-    expect(GetHeadingSummaryCommand).toHaveBeenCalledWith(args.req.ctx, args.session);
+    expect(GetDiscoveryPatientHeadingCommand).toHaveBeenCalledWith(args.req.ctx, args.session);
     expect(command.execute).toHaveBeenCalledWith(args.patientId, args.heading);
 
     expect(finished).toHaveBeenCalledWith({

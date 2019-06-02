@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  02 June 2019
+  2 June 2019
 
 */
 
@@ -52,15 +52,15 @@ describe('discovery-service/lib/services/authRestService', () => {
     });
   });
 
-  xit('should return token', async () => {
+  it('should return token', async () => {
     const expected = {
       access_token: 'foo.bar.baz'
     };
 
     nock('https://devauth.discoverydataservice.net')
       .post('/auth/realms/endeavour/protocol/openid-connect/token', [
-        'username=xxxxxxxx',
-        'password=yyyyyyyyyyy', //@TODO how handle real credentials?
+        'username=xxxxxxxxxxxxx',
+        'password=yyyyyyyyyyyyy',
         'client_id=eds-data-checker',
         'grant_type=password'
       ].join('&'))
@@ -74,11 +74,11 @@ describe('discovery-service/lib/services/authRestService', () => {
     expect(actual).toEqual(expected);
   });
 
-  xit('should throw error', async () => {
+  it('should throw error', async () => {
     nock('https://devauth.discoverydataservice.net')
       .post('/auth/realms/endeavour/protocol/openid-connect/token', [
-        'username=xxxxxxxx',
-        'password=yyyyyyyyyyy', //@TODO how handle real credentials?
+        'username=xxxxxxxxxxxxx',
+        'password=yyyyyyyyyyyyy',
         'client_id=eds-data-checker',
         'grant_type=password'
       ].join('&'))

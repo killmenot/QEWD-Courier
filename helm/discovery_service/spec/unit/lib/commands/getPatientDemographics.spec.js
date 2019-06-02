@@ -24,18 +24,18 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  02 June 2019
+  2 June 2019
 
 */
 
 'use strict';
 
 const { ExecutionContextMock } = require('@tests/mocks');
-const { GetDemographicsCommand } = require('@lib/commands');
+const { GetPatientDemographicsCommand } = require('@lib/commands');
 const { Role } = require('@lib/shared/enums');
 const { BadRequestError } = require('@lib/errors');
 
-describe('discovery-service/lib/commands/getDemographicsCommand', () => {
+describe('discovery-service/lib/commands/getPatientDemographics', () => {
   let ctx;
   let session;
   let patientId;
@@ -76,17 +76,15 @@ describe('discovery-service/lib/commands/getDemographicsCommand', () => {
   });
 
   it('should throw patientId is invalid error', async () => {
-    //@TODO It breaks because I've hardcoded nhsNumber in GetDemographicsCommand L:61
     patientId = 'foo';
 
-    const command = new GetDemographicsCommand(ctx, session);
+    const command = new GetPatientDemographicsCommand(ctx, session);
     const actual = command.execute(patientId);
 
     await expectAsync(actual).toBeRejectedWith(new BadRequestError('patientId foo is invalid'));
   });
 
-  xit('should return cached demographics', async () => {
-    //@TODO It breaks because I've hardcoded nhsNumber in GetDemographicsCommand L:61
+  it('should return cached demographics', async () => {
     const expected = {
       id: 9999999000,
       nhsNumber: 9999999000,
@@ -112,31 +110,33 @@ describe('discovery-service/lib/commands/getDemographicsCommand', () => {
     };
     cacheService.getDemographics.and.returnValue(responseObj);
 
-    const command = new GetDemographicsCommand(ctx, session);
+    const command = new GetPatientDemographicsCommand(ctx, session);
     const actual = await command.execute(patientId);
 
     expect(cacheService.getDemographics).toHaveBeenCalledWith(patientId);
     expect(actual).toEqual(expected);
   });
 
-  xit('should return demographics', async () => {
-    //@TODO It breaks because I've hardcoded nhsNumber in GetDemographicsCommand L:61
+  it('should return demographics', async () => {
     const expected = {
-      id: 9999999000,
-      nhsNumber: 9999999000,
-      gender: 'female',
-      phone : '+44 58584 5475477',
-      name: 'Megan',
-      dateOfBirth: 1546300800000,
-      gpName: 'Fox',
-      gpAddress: 'California',
-      address: 'London'
+      responseFrom: 'discovery_service',
+      results: {
+        id: 9999999000,
+        nhsNumber: 9999999000,
+        gender: 'female',
+        phone : '+44 58584 5475477',
+        name: 'Megan',
+        dateOfBirth: 1546300800000,
+        gpName: 'Fox',
+        gpAddress: 'California',
+        address: 'London'
+      }
     };
 
     cacheService.getDemographics.and.returnValue(null);
     mockDemographicsService(patientId);
 
-    const command = new GetDemographicsCommand(ctx, session);
+    const command = new GetPatientDemographicsCommand(ctx, session);
     const actual = await command.execute(patientId);
 
     expect(cacheService.getDemographics).toHaveBeenCalledWith(9999999000);
@@ -147,18 +147,20 @@ describe('discovery-service/lib/commands/getDemographicsCommand', () => {
     expect(actual).toEqual(expected);
   });
 
-  xit('should return demographics (phr user)', async () => {
-    //@TODO It breaks because I've hardcoded nhsNumber in GetDemographicsCommand L:61
+  it('should return demographics (phr user)', async () => {
     const expected = {
-      id: 9999999111,
-      nhsNumber: 9999999111,
-      gender: 'female',
-      phone : '+44 58584 5475477',
-      name: 'Megan',
-      dateOfBirth: 1546300800000,
-      gpName: 'Fox',
-      gpAddress: 'California',
-      address: 'London'
+      responseFrom: 'discovery_service',
+      results: {
+        id: 9999999111,
+        nhsNumber: 9999999111,
+        gender: 'female',
+        phone : '+44 58584 5475477',
+        name: 'Megan',
+        dateOfBirth: 1546300800000,
+        gpName: 'Fox',
+        gpAddress: 'California',
+        address: 'London'
+      }
     };
 
     session.role = Role.PHR_USER;
@@ -166,7 +168,7 @@ describe('discovery-service/lib/commands/getDemographicsCommand', () => {
     cacheService.getDemographics.and.returnValue();
     mockDemographicsService(session.nhsNumber);
 
-    const command = new GetDemographicsCommand(ctx, session);
+    const command = new GetPatientDemographicsCommand(ctx, session);
     const actual = await command.execute(patientId);
 
     expect(cacheService.getDemographics).toHaveBeenCalledWith(9999999111);

@@ -23,28 +23,28 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  13 February 2019
+  2 June 2019
 
 */
 
 'use strict';
 
-const { GetDemographicsCommand } = require('../../lib/commands');
+const { GetPatientDemographicsCommand } = require('../../lib/commands');
 const { getResponseError } = require('../../lib/errors');
 
 /**
  * @param  {Object} args
  * @param  {Function} finished
  */
-module.exports = async function getPatientDemographics (args, finished) {
+module.exports = async function getPatientDemographics(args, finished) {
   try {
-    const command = new GetDemographicsCommand(args.req.ctx, args.session);
+    const command = new GetPatientDemographicsCommand(args.req.ctx, args.session);
     const responseObj = await command.execute(args.patientId);
-    
+
     finished(responseObj);
   } catch (err) {
     const responseError = getResponseError(err);
-    
+
     finished(responseError);
   }
 };

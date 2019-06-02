@@ -24,20 +24,16 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 February 2018
+  2 June 2019
 
 */
 
 'use strict';
 
-const GetHeadingDetailCommand = require('./getHeadingDetailCommand');
-const GetHeadingSummaryCommand = require('./getHeadingSummaryCommand');
-const GetDemographicsCommand = require('./getDemographicsCommand');
-const baseCommand = require('./baseCommand');
+const GetDiscoveryPatientHeadingCommand = require('./getDiscoveryPatientHeading');
+const GetPatientDemographicsCommand = require('./getPatientDemographics');
 
 module.exports = {
-  GetHeadingDetailCommand,
-  GetHeadingSummaryCommand,
-  GetDemographicsCommand,
-  baseCommand
+  GetDiscoveryPatientHeadingCommand,
+  GetPatientDemographicsCommand
 };

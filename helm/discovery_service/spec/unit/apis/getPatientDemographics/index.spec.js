@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 February 2019
+  2 June 2019
 
 */
 
@@ -33,13 +33,13 @@
 const mockery = require('mockery');
 const { ExecutionContextMock, CommandMock } = require('@tests/mocks');
 
-xdescribe('ripple-cdr-lib/lib/handlers/getDemographics', () => {
+describe('discovery_service/apis/getPatientDemographics', () => {
   let args;
   let finished;
   let command;
 
   let handler;
-  let GetDemographicsCommand;
+  let GetPatientDemographicsCommand;
 
   beforeAll(() => {
     mockery.enable({
@@ -64,8 +64,8 @@ xdescribe('ripple-cdr-lib/lib/handlers/getDemographics', () => {
     finished = jasmine.createSpy();
 
     command = new CommandMock();
-    GetDemographicsCommand = jasmine.createSpy().and.returnValue(command);
-    mockery.registerMock('../commands', { GetDemographicsCommand });
+    GetPatientDemographicsCommand = jasmine.createSpy().and.returnValue(command);
+    mockery.registerMock('../../lib/commands', { GetPatientDemographicsCommand });
 
     delete require.cache[require.resolve('@apis/getPatientDemographics/index')];
     handler = require('@apis/getPatientDemographics/index');
@@ -85,7 +85,7 @@ xdescribe('ripple-cdr-lib/lib/handlers/getDemographics', () => {
 
     await handler(args, finished);
 
-    expect(GetDemographicsCommand).toHaveBeenCalledWith(args.req.ctx, args.session);
+    expect(GetPatientDemographicsCommand).toHaveBeenCalledWith(args.req.ctx, args.session);
     expect(command.execute).toHaveBeenCalledWith(args.patientId);
     expect(finished).toHaveBeenCalledWith(responseObj);
   });
@@ -95,7 +95,7 @@ xdescribe('ripple-cdr-lib/lib/handlers/getDemographics', () => {
 
     await handler(args, finished);
 
-    expect(GetDemographicsCommand).toHaveBeenCalledWith(args.req.ctx, args.session);
+    expect(GetPatientDemographicsCommand).toHaveBeenCalledWith(args.req.ctx, args.session);
     expect(command.execute).toHaveBeenCalledWith(args.patientId);
 
     expect(finished).toHaveBeenCalledWith({

@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  8 February 2019
+  2 June 2019
 
 */
 
@@ -57,6 +57,6 @@ module.exports = function (req) {
 
   req.qewdSession = this.qewdSessionByJWT.call(this, req);
   req.ctx = ExecutionContext.fromRequest(this, req);
-  return true;
 
+  return true;
 };
