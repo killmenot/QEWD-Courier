@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 February 2019
+  02 June 2019
 
 */
 
@@ -33,7 +33,7 @@
 const { ExecutionContextMock } = require('@tests/mocks');
 const { DemographicCache } = require('@lib/cache');
 
-describe('ripple-cdr-lib/lib/cache/demographicsCache', () => {
+describe('discovery-service/lib/cache/demographicsCache', () => {
   let ctx;
   let nhsNumber;
 

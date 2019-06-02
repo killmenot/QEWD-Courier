@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  13 February 2019
+  02 June 2019
 
 */
 
@@ -33,7 +33,7 @@
 const { ExecutionContextMock } = require('@tests/mocks');
 const HeadingService = require('@lib/services/headingService');
 
-describe('ripple-cdr-lib/lib/services/headingService', () => {
+describe('discovery-service/lib/services/headingService', () => {
   let ctx;
 
   let headingService;

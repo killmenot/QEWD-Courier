@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  13 February 2019
+  02 June 2019
 
 */
 
@@ -35,7 +35,7 @@ const { GetDemographicsCommand } = require('@lib/commands');
 const { Role } = require('@lib/shared/enums');
 const { BadRequestError } = require('@lib/errors');
 
-describe('ripple-cdr-lib/lib/commands/getDemographicsCommand', () => {
+describe('discovery-service/lib/commands/getDemographicsCommand', () => {
   let ctx;
   let session;
   let patientId;

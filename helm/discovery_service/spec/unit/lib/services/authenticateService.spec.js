@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  12 February 2019
+  02 June 2019
 
 */
 
@@ -34,7 +34,7 @@ const { ExecutionContextMock } = require('@tests/mocks');
 const AuthRestService = require('@lib/services/authRestService');
 const nock = require('nock');
 
-describe('ripple-cdr-lib/lib/services/authRestService', () => {
+describe('discovery-service/lib/services/authRestService', () => {
   let ctx;
   let authService;
 

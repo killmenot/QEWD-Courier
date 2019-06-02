@@ -1,9 +1,9 @@
 /*
 
  ----------------------------------------------------------------------------
- | ripple-cdr-discovery: Ripple Discovery Interface                         |
+ | ripple-cdr-discovery: Ripple MicroServices for OpenEHR                     |
  |                                                                          |
- | Copyright (c) 2017-19 Ripple Foundation Community Interest Company       |
+ | Copyright (c) 2018-19 Ripple Foundation Community Interest Company       |
  | All rights reserved.                                                     |
  |                                                                          |
  | http://rippleosi.org                                                     |
@@ -24,81 +24,69 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  13 February 2019
+  02 June 2019
 
 */
 
 'use strict';
 
 const { ExecutionContextMock } = require('@tests/mocks');
-const CacheService = require('@lib/services/cacheService');
+const { DiscoveryCache } = require('@lib/cache');
 
-describe('ripple-cdr-lib/lib/services/cacheService', () => {
+describe('discovery-service/lib/cache/discoveryCache', () => {
   let ctx;
-  let nhsNumber;
 
-  let cacheService;
-  let demographicCache;
+  let discoveryCache;
+  let qewdSession;
+
+  function seeds() {
+    qewdSession.data.$(['Discovery']).setDocument({
+      'Patient': {
+        '44137bde-4103-49c8-a4c8-7cb8fcf8aeb9': {
+          value: 'bar'
+        }
+      },
+      'Condition': {
+        'cdff4e82-aec8-4724-857c-fbc7a90a4ad4': {
+          value: 'quux'
+        }
+      }
+    });
+  }
 
   beforeEach(() => {
     ctx = new ExecutionContextMock();
-    nhsNumber = 9999999000;
 
-    cacheService = new CacheService(ctx);
-    demographicCache = ctx.cache.demographicCache;
+    discoveryCache = new DiscoveryCache(ctx.adapter);
+    qewdSession = ctx.adapter.qewdSession;
 
     ctx.cache.freeze();
   });
 
+  afterEach(() => {
+    ctx.worker.db.reset();
+  });
+
   describe('#create (static)', () => {
     it('should initialize a new instance', () => {
-      const actual = CacheService.create(ctx);
+      const actual = DiscoveryCache.create(ctx.adapter);
 
-      expect(actual).toEqual(jasmine.any(CacheService));
-      expect(actual.ctx).toBe(ctx);
+      expect(actual).toEqual(jasmine.any(DiscoveryCache));
+      expect(actual.adapter).toBe(ctx.adapter);
     });
   });
 
-  describe('#getDemographics', () => {
-    it('should return null when error occurred', () => {
-      const expected = null;
+  describe('#deleteAll', () => {
+    it('should delete all discovery cache', () => {
+      const excepted = {};
 
-      demographicCache.byNhsNumber.get.and.throwError(new Error('some custom error'));
+      seeds();
 
-      const actual = cacheService.getDemographics(nhsNumber);
+      discoveryCache.deleteAll();
 
-      expect(actual).toEqual(expected);
-    });
+      const actual = qewdSession.data.$(['Discovery']).getDocument();
 
-    it('should return cached demographics', () => {
-      const expected = {
-        id: 9999999000,
-        nhsNumber: 9999999000,
-        gender: 'female',
-        phone : '+44 58584 5475477',
-        name: 'Megan',
-        dateOfBirth: 1546400900000,
-        gpName: 'Fox',
-        gpAddress: 'California',
-        address: 'London'
-      };
-
-      const data = {
-        id: 9999999000,
-        nhsNumber: 9999999000,
-        gender: 'female',
-        phone : '+44 58584 5475477',
-        name: 'Megan',
-        dateOfBirth: 1546400900000,
-        gpName: 'Fox',
-        gpAddress: 'California',
-        address: 'London'
-      };
-      demographicCache.byNhsNumber.get.and.returnValue(data);
-
-      const actual = cacheService.getDemographics(nhsNumber);
-
-      expect(actual).toEqual(expected);
+      expect(actual).toEqual(excepted);
     });
   });
 });

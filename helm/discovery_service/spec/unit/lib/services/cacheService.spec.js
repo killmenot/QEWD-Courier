@@ -1,9 +1,9 @@
 /*
 
  ----------------------------------------------------------------------------
- | ripple-cdr-discovery: Ripple MicroServices for OpenEHR                     |
+ | ripple-cdr-discovery: Ripple Discovery Interface                         |
  |                                                                          |
- | Copyright (c) 2018-19 Ripple Foundation Community Interest Company       |
+ | Copyright (c) 2017-19 Ripple Foundation Community Interest Company       |
  | All rights reserved.                                                     |
  |                                                                          |
  | http://rippleosi.org                                                     |
@@ -24,86 +24,80 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 February 2019
+ 02 June 2019
 
 */
 
 'use strict';
 
 const { ExecutionContextMock } = require('@tests/mocks');
-const { TokenCache } = require('@lib/cache');
+const CacheService = require('@lib/services/cacheService');
 
-describe('ripple-cdr-lib/lib/cache/tokenCache', () => {
+describe('discovery-service/lib/services/cacheService', () => {
   let ctx;
+  let nhsNumber;
 
-  let tokenCache;
-  let qewdSession;
-
-  function seeds() {
-    qewdSession.data.$(['discoveryToken']).setDocument({
-      token: 'foo.bar.baz',
-      createdAt: 1546300800000
-    });
-  }
+  let cacheService;
+  let demographicCache;
 
   beforeEach(() => {
     ctx = new ExecutionContextMock();
+    nhsNumber = 9999999000;
 
-    tokenCache = new TokenCache(ctx.adapter);
-    qewdSession = ctx.adapter.qewdSession;
+    cacheService = new CacheService(ctx);
+    demographicCache = ctx.cache.demographicCache;
 
     ctx.cache.freeze();
   });
 
-  afterEach(() => {
-    ctx.worker.db.reset();
-  });
-
   describe('#create (static)', () => {
     it('should initialize a new instance', () => {
-      const actual = TokenCache.create(ctx.adapter);
+      const actual = CacheService.create(ctx);
 
-      expect(actual).toEqual(jasmine.any(TokenCache));
-      expect(actual.adapter).toBe(ctx.adapter);
+      expect(actual).toEqual(jasmine.any(CacheService));
+      expect(actual.ctx).toBe(ctx);
     });
   });
 
-  describe('#get', () => {
-    it('should get token from cache', () => {
-      const expected = {
-        token: 'foo.bar.baz',
-        createdAt: 1546300800000
-      };
+  describe('#getDemographics', () => {
+    it('should return null when error occurred', () => {
+      const expected = null;
 
-      seeds();
-      const actual = tokenCache.get();
+      demographicCache.byNhsNumber.get.and.throwError(new Error('some custom error'));
+
+      const actual = cacheService.getDemographics(nhsNumber);
 
       expect(actual).toEqual(expected);
     });
-  });
 
-  describe('#set', () => {
-    it('should set token to cache', () => {
-      const token = {
-        token: 'quuz.quux.quuy',
-        createdAt: 1546300800000
+    it('should return cached demographics', () => {
+      const expected = {
+        id: 9999999000,
+        nhsNumber: 9999999000,
+        gender: 'female',
+        phone : '+44 58584 5475477',
+        name: 'Megan',
+        dateOfBirth: 1546400900000,
+        gpName: 'Fox',
+        gpAddress: 'California',
+        address: 'London'
       };
 
-      tokenCache.set(token);
+      const data = {
+        id: 9999999000,
+        nhsNumber: 9999999000,
+        gender: 'female',
+        phone : '+44 58584 5475477',
+        name: 'Megan',
+        dateOfBirth: 1546400900000,
+        gpName: 'Fox',
+        gpAddress: 'California',
+        address: 'London'
+      };
+      demographicCache.byNhsNumber.get.and.returnValue(data);
 
-      const actual = qewdSession.data.$(['discoveryToken']).getDocument();
-      expect(actual).toEqual(token);
-    });
-  });
+      const actual = cacheService.getDemographics(nhsNumber);
 
-  describe('#delete', () => {
-    it('should delete token from cache', () => {
-      const expected = {};
-
-      seeds();
-      tokenCache.delete();
-
-      const actual = qewdSession.data.$(['discoveryToken']).getDocument();
       expect(actual).toEqual(expected);
     });
   });

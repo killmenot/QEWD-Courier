@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  15 February 2019
+  02 June 2019
 
 */
 
@@ -33,7 +33,7 @@
 const { ExecutionContextMock } = require('@tests/mocks');
 const { ResourceCache } = require('@lib/cache');
 
-describe('ripple-cdr-lib/lib/cache/resourceCache', () => {
+describe('discovery-service/lib/cache/resourceCache', () => {
   let ctx;
 
   let qewdSession;

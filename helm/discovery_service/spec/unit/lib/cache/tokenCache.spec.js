@@ -24,40 +24,32 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 February 2019
+  02 June 2019
 
 */
 
 'use strict';
 
 const { ExecutionContextMock } = require('@tests/mocks');
-const { DiscoveryCache } = require('@lib/cache');
+const { TokenCache } = require('@lib/cache');
 
-describe('ripple-cdr-lib/lib/cache/discoveryCache', () => {
+describe('discovery-service/lib/cache/tokenCache', () => {
   let ctx;
 
-  let discoveryCache;
+  let tokenCache;
   let qewdSession;
 
   function seeds() {
-    qewdSession.data.$(['Discovery']).setDocument({
-      'Patient': {
-        '44137bde-4103-49c8-a4c8-7cb8fcf8aeb9': {
-          value: 'bar'
-        }
-      },
-      'Condition': {
-        'cdff4e82-aec8-4724-857c-fbc7a90a4ad4': {
-          value: 'quux'
-        }
-      }
+    qewdSession.data.$(['discoveryToken']).setDocument({
+      token: 'foo.bar.baz',
+      createdAt: 1546300800000
     });
   }
 
   beforeEach(() => {
     ctx = new ExecutionContextMock();
 
-    discoveryCache = new DiscoveryCache(ctx.adapter);
+    tokenCache = new TokenCache(ctx.adapter);
     qewdSession = ctx.adapter.qewdSession;
 
     ctx.cache.freeze();
@@ -69,24 +61,50 @@ describe('ripple-cdr-lib/lib/cache/discoveryCache', () => {
 
   describe('#create (static)', () => {
     it('should initialize a new instance', () => {
-      const actual = DiscoveryCache.create(ctx.adapter);
+      const actual = TokenCache.create(ctx.adapter);
 
-      expect(actual).toEqual(jasmine.any(DiscoveryCache));
+      expect(actual).toEqual(jasmine.any(TokenCache));
       expect(actual.adapter).toBe(ctx.adapter);
     });
   });
 
-  describe('#deleteAll', () => {
-    it('should delete all discovery cache', () => {
-      const excepted = {};
+  describe('#get', () => {
+    it('should get token from cache', () => {
+      const expected = {
+        token: 'foo.bar.baz',
+        createdAt: 1546300800000
+      };
 
       seeds();
+      const actual = tokenCache.get();
 
-      discoveryCache.deleteAll();
+      expect(actual).toEqual(expected);
+    });
+  });
 
-      const actual = qewdSession.data.$(['Discovery']).getDocument();
+  describe('#set', () => {
+    it('should set token to cache', () => {
+      const token = {
+        token: 'quuz.quux.quuy',
+        createdAt: 1546300800000
+      };
 
-      expect(actual).toEqual(excepted);
+      tokenCache.set(token);
+
+      const actual = qewdSession.data.$(['discoveryToken']).getDocument();
+      expect(actual).toEqual(token);
+    });
+  });
+
+  describe('#delete', () => {
+    it('should delete token from cache', () => {
+      const expected = {};
+
+      seeds();
+      tokenCache.delete();
+
+      const actual = qewdSession.data.$(['discoveryToken']).getDocument();
+      expect(actual).toEqual(expected);
     });
   });
 });
