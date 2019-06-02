@@ -92,7 +92,7 @@ module.exports = {
         }
       },
       getSeniorClinician: (value) => {
-        return value === 'ReSPECT Senior Responsible Clinician signature'
+        return value === 'ReSPECT Senior Responsible Clinician signature';
       }
     },
 
@@ -245,7 +245,7 @@ module.exports = {
         }
       },
       getSeniorClinician: (value) => {
-        return value ? 'ReSPECT Senior Responsible Clinician signature' : 'ReSPECT clinician signature'
+        return value ? 'ReSPECT Senior Responsible Clinician signature' : 'ReSPECT clinician signature';
       }
     },
 

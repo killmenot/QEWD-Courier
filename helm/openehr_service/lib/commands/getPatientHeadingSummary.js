@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -75,15 +75,14 @@ class GetPatientHeadingSummaryCommand {
 
     debug('heading %s for %s is cached', heading, patientId);
     const { results, fetchCount } = await headingService.getSummary(patientId, heading);
-  
-    const headingsResult = results.sort((n, p) => new Date(n.dateCreated) - new Date(p.dateCreated));
+
     const responseObj = {
       responseFrom: 'phr_service',
       api: 'getPatientHeadingSummary',
-      use: 'headingsResult',
+      use: 'results',
       patientId,
       heading,
-      headingsResult,
+      results,
       fetch_count: fetchCount
     };
 

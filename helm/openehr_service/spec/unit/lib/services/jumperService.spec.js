@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -328,7 +328,9 @@ describe('lib/services/jumperService', () => {
           heading: 'procedures',
           compositionId: '0f7192e9-168e-4dea-812a-3e1d236ae46d::vm01.ethercis.org::1',
           data: {
-            foo: 'bar'
+            data: {
+              foo: 'bar'
+            }
           },
           method: 'put',
           qewdSession: ctx.qewdSession

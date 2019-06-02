@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  17 April 2019
+  02 June 2019
 
 */
 
@@ -63,12 +63,14 @@ describe('lib/commands/getPatientHeadingSummary', () => {
         {
           desc: 'foo',
           source: 'ethercis',
-          sourceId: '74b6a24b-bd97-47f0-ac6f-a632d0cac60f'
+          sourceId: '74b6a24b-bd97-47f0-ac6f-a632d0cac60f',
+          dateCreated: 1559336400000
         },
         {
           desc: 'bar',
           source: 'marand',
-          sourceId: '41bc6370-33a4-4ae1-8b3d-d2d9cfe606a4'
+          sourceId: '41bc6370-33a4-4ae1-8b3d-d2d9cfe606a4',
+          dateCreated: 1559336400000
         }
       ],
       fetchCount: 8
@@ -114,20 +116,22 @@ describe('lib/commands/getPatientHeadingSummary', () => {
     const expected = {
       responseFrom: 'phr_service',
       api: 'getPatientHeadingSummary',
-      use: 'headingsResult',
+      use: 'results',
       patientId: 9999999111,
       heading: 'procedures',
       fetch_count: 8,
-      headingsResult: [
+      results: [
         {
           desc: 'foo',
           source: 'ethercis',
-          sourceId: '74b6a24b-bd97-47f0-ac6f-a632d0cac60f'
+          sourceId: '74b6a24b-bd97-47f0-ac6f-a632d0cac60f',
+          dateCreated: 1559336400000
         },
         {
           desc: 'bar',
           source: 'marand',
-          sourceId: '41bc6370-33a4-4ae1-8b3d-d2d9cfe606a4'
+          sourceId: '41bc6370-33a4-4ae1-8b3d-d2d9cfe606a4',
+          dateCreated: 1559336400000
         }
       ]
     };
@@ -145,20 +149,22 @@ describe('lib/commands/getPatientHeadingSummary', () => {
     const expected = {
       responseFrom: 'phr_service',
       api: 'getPatientHeadingSummary',
-      use: 'headingsResult',
+      use: 'results',
       patientId: 9999999000,
       heading: 'procedures',
       fetch_count: 8,
-      headingsResult: [
+      results: [
         {
           desc: 'foo',
           source: 'ethercis',
-          sourceId: '74b6a24b-bd97-47f0-ac6f-a632d0cac60f'
+          sourceId: '74b6a24b-bd97-47f0-ac6f-a632d0cac60f',
+          dateCreated: 1559336400000
         },
         {
           desc: 'bar',
           source: 'marand',
-          sourceId: '41bc6370-33a4-4ae1-8b3d-d2d9cfe606a4'
+          sourceId: '41bc6370-33a4-4ae1-8b3d-d2d9cfe606a4',
+          dateCreated: 1559336400000
         }
       ]
     };

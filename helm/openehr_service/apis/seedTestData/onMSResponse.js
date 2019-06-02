@@ -41,7 +41,7 @@ const { ExtraHeading, Heading, RecordStatus } = require('../../lib/shared/enums'
  * @return {bool}
  */
 module.exports = function (message, jwt, forward, sendBack) { // eslint-disable-line no-unused-vars
-  
+
   const globalConfig = this.userDefined.globalConfig;
 
   // is DDS configured for use?
@@ -126,10 +126,9 @@ module.exports = function (message, jwt, forward, sendBack) { // eslint-disable-
     request to the OpenEHR MicroService
 
   */
-   
-   
+
     const seedDispatcher = new SeedDispatcher(this);
-    seedDispatcher.syncAll(message.results, headings, jwt, forward);
+    seedDispatcher.syncAll(message.results, headings, jwt);
 
   return false;
 };

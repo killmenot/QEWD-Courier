@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -664,13 +664,14 @@ describe('lib/services/headingService', () => {
       beforeEach(() => {
         dbData = {
           heading: 'procedures',
+          date: 1406246400000,
           pulsetile: {
             source: 'ethercis',
             sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
             procedure_name: 'quux',
             name: 'John Doe',
-            dateCreated: '1406246400000',
-            time: '15:00'
+            date: 1517486400000,
+            time: 54000000
           }
         };
       });
@@ -681,8 +682,8 @@ describe('lib/services/headingService', () => {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           procedure_name: 'quux',
           name: 'John Doe',
-          dateCreated: '1406246400000',
-          time: '15:00'
+          date: 1517486400000,
+          time: 54000000
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -705,8 +706,8 @@ describe('lib/services/headingService', () => {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           procedure_name: 'quux',
           name: 'John Doe',
-          dateCreated: '1406246400000',
-          time: '15:00'
+          date: 1517486400000,
+          time: 54000000
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -723,12 +724,12 @@ describe('lib/services/headingService', () => {
         expect(actual).toEqual(expected);
       });
 
-     it('should return synopsis', async () => {
+      it('should return synopsis', async () => {
         const expected = {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'ethercis',
           text: 'quux',
-          dateCreated: '1406246400000'
+          dateCreated: ''
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -750,7 +751,7 @@ describe('lib/services/headingService', () => {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'GP',
           text: 'quux',
-          dateCreated: '1406246400000'
+          dateCreated: ''
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -767,12 +768,36 @@ describe('lib/services/headingService', () => {
         expect(actual).toEqual(expected);
       });
 
+      it('should return synopsis (date created)', async () => {
+        const expected = {
+          sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
+          source: 'GP',
+          text: 'quux',
+          dateCreated: 1559336400000
+        };
+
+        headingCache.bySourceId.get.and.returnValue(dbData);
+        jumperService.check.and.returnValue({ ok: false });
+        discoveryDb.checkBySourceId.and.returnValue(true);
+
+        dbData.pulsetile.dateCreated = 1559336400000;
+
+        const sourceId = 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d';
+        const actual = await headingService.getBySourceId(sourceId, 'synopsis');
+
+        expect(headingCache.bySourceId.get).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+        expect(jumperService.check).toHaveBeenCalledWith('procedures', 'getBySourceId');
+        expect(discoveryDb.checkBySourceId).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+
+        expect(actual).toEqual(expected);
+      });
+
       it('should return synopsis (no values)', async () => {
         const expected = {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'ethercis',
           text: '',
-          dateCreated: '1406246400000'
+          dateCreated: ''
         };
 
         delete dbData.pulsetile.procedure_name;
@@ -796,8 +821,9 @@ describe('lib/services/headingService', () => {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'ethercis',
           name: 'John Doe',
-          dateCreated: '1406246400000',
-          time: '15:00'
+          dateCreated: '',
+          date: 1517486400000,
+          time: 54000000
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -819,8 +845,9 @@ describe('lib/services/headingService', () => {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'GP',
           name: 'John Doe',
-          date: '2019-01-01',
-          time: '15:00'
+          dateCreated: '',
+          date: 1517486400000,
+          time: 54000000
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -837,13 +864,40 @@ describe('lib/services/headingService', () => {
         expect(actual).toEqual(expected);
       });
 
+      it('should return summary (date created)', async () => {
+        const expected = {
+          sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
+          source: 'GP',
+          name: 'John Doe',
+          dateCreated: 1559336400000,
+          date: 1517486400000,
+          time: 54000000
+        };
+
+        headingCache.bySourceId.get.and.returnValue(dbData);
+        jumperService.check.and.returnValue({ ok: false });
+        discoveryDb.checkBySourceId.and.returnValue(true);
+
+        dbData.pulsetile.dateCreated = 1559336400000;
+
+        const sourceId = 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d';
+        const actual = await headingService.getBySourceId(sourceId, 'summary');
+
+        expect(headingCache.bySourceId.get).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+        expect(jumperService.check).toHaveBeenCalledWith('procedures', 'getBySourceId');
+        expect(discoveryDb.checkBySourceId).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+
+        expect(actual).toEqual(expected);
+      });
+
       it('should return summary (no values)', async () => {
         const expected = {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'ethercis',
           name: '',
-          date: '2019-01-01',
-          time: '15:00'
+          dateCreated: '',
+          date: 1517486400000,
+          time: 54000000
         };
 
         delete dbData.pulsetile.name;
@@ -871,6 +925,7 @@ describe('lib/services/headingService', () => {
       beforeEach(() => {
         dbData = {
           heading: 'problems',
+          date: 1406246400000,
           jumperFormatData: {
             foo: 'bar'
           }
@@ -945,7 +1000,8 @@ describe('lib/services/headingService', () => {
         const expected = {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'ethercis',
-          text: 'foo bar baz'
+          text: 'foo bar baz',
+          dateCreated: ''
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -968,7 +1024,8 @@ describe('lib/services/headingService', () => {
         const expected = {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'GP',
-          text: 'foo bar baz'
+          text: 'foo bar baz',
+          dateCreated: ''
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -987,11 +1044,38 @@ describe('lib/services/headingService', () => {
         expect(actual).toEqual(expected);
       });
 
+      it('should return synopsis (date created)', async () => {
+        const expected = {
+          sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
+          source: 'GP',
+          text: 'foo bar baz',
+          dateCreated: 1559336400000
+        };
+
+        headingCache.bySourceId.get.and.returnValue(dbData);
+        jumperService.check.and.returnValue(jumperObj);
+        jumperService.getBySourceId.and.resolveValue(jumperDataObj);
+        discoveryDb.checkBySourceId.and.returnValue(true);
+
+        jumperDataObj.dateCreated = 1559336400000;
+
+        const sourceId = 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d';
+        const actual = await headingService.getBySourceId(sourceId, 'synopsis');
+
+        expect(headingCache.bySourceId.get).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+        expect(jumperService.check).toHaveBeenCalledWith('problems', 'getBySourceId');
+        expect(jumperService.getBySourceId).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+        expect(discoveryDb.checkBySourceId).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+
+        expect(actual).toEqual(expected);
+      });
+
       it('should return synopsis (no values)', async () => {
         const expected = {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'ethercis',
-          text: ''
+          text: '',
+          dateCreated: ''
         };
 
         delete jumperDataObj.problem;
@@ -1018,6 +1102,7 @@ describe('lib/services/headingService', () => {
           source: 'ethercis',
           problem: 'foo bar baz',
           dateOfOnset: '2018-02-01T12:00:00Z',
+          dateCreated: ''
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -1042,6 +1127,7 @@ describe('lib/services/headingService', () => {
           source: 'GP',
           problem: 'foo bar baz',
           dateOfOnset: '2018-02-01T12:00:00Z',
+          dateCreated: ''
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -1060,12 +1146,40 @@ describe('lib/services/headingService', () => {
         expect(actual).toEqual(expected);
       });
 
+      it('should return summary (date created)', async () => {
+        const expected = {
+          sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
+          source: 'GP',
+          problem: 'foo bar baz',
+          dateOfOnset: '2018-02-01T12:00:00Z',
+          dateCreated: 1559336400000
+        };
+
+        headingCache.bySourceId.get.and.returnValue(dbData);
+        jumperService.check.and.returnValue(jumperObj);
+        jumperService.getBySourceId.and.resolveValue(jumperDataObj);
+        discoveryDb.checkBySourceId.and.returnValue(true);
+
+        jumperDataObj.dateCreated = 1559336400000;
+
+        const sourceId = 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d';
+        const actual = await headingService.getBySourceId(sourceId, 'summary');
+
+        expect(headingCache.bySourceId.get).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+        expect(jumperService.check).toHaveBeenCalledWith('problems', 'getBySourceId');
+        expect(jumperService.getBySourceId).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+        expect(discoveryDb.checkBySourceId).toHaveBeenCalledWith('ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d');
+
+        expect(actual).toEqual(expected);
+      });
+
       it('should return summary (no values)', async () => {
         const expected = {
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
           source: 'ethercis',
           problem: '',
           dateOfOnset: '2018-02-01T12:00:00Z',
+          dateCreated: ''
         };
 
         delete jumperDataObj.problem;
@@ -1093,6 +1207,7 @@ describe('lib/services/headingService', () => {
       beforeEach(() => {
         dbData = {
           heading: 'personalnotes',
+          date: 1406246400000,
           host: 'ethercis',
           data: {
             type: 'some type',
@@ -1107,6 +1222,7 @@ describe('lib/services/headingService', () => {
       it('should transform data to pulsetile and cache it', async () => {
         const expected = {
           heading: 'personalnotes',
+          date: 1406246400000,
           host: 'ethercis',
           data: {
             type: 'some type',
@@ -1197,7 +1313,8 @@ describe('lib/services/headingService', () => {
         const expected = {
           source: 'ethercis',
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
-          text: 'some type'
+          text: 'some type',
+          dateCreated: 1517486400000
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -1221,7 +1338,8 @@ describe('lib/services/headingService', () => {
         const expected = {
           source: 'GP',
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
-          text: 'some type'
+          text: 'some type',
+          dateCreated: 1517486400000
         };
 
         headingCache.bySourceId.get.and.returnValue(dbData);
@@ -1245,7 +1363,8 @@ describe('lib/services/headingService', () => {
         const expected = {
           source: 'ethercis',
           sourceId: 'ethercis-0f7192e9-168e-4dea-812a-3e1d236ae46d',
-          text: ''
+          text: '',
+          dateCreated: 1517486400000
         };
 
         delete dbData.data.type;
