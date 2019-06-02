@@ -31,7 +31,7 @@
 
 const nock = require('nock');
 const { Worker } = require('@tests/mocks');
-const mapNHSNoByHost = require('@openehr/mapNhsNoByHost');
+const mapNHSNoByHost = require('@openehr/mapNHSNoByHost');
 
 describe('openehr-service/utils/openehr/mapNHSNoByHost', () => {
   let q;

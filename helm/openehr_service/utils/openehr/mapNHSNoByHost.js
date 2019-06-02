@@ -31,14 +31,14 @@
 
 const { ExecutionContext, logger } = require('../../lib/core');
 
-function mapNhsNoByHost(patientId, host, ehrSession, callback) {
+function mapNHSNoByHost(patientId, host, ehrSession, callback) {
   const ctx = new ExecutionContext(this);
   const { patientService } = ctx.services;
 
   patientService.getEhrId(host, patientId)
     .then(ehrId => callback(ehrId))
     .catch(err => {
-      logger.error('utils/openehr/mapNhsNoByHost|err:', err);
+      logger.error('utils/openehr/mapNHSNoByHost|err:', err);
     });
 }
-module.exports = mapNhsNoByHost;
+module.exports = mapNHSNoByHost;
