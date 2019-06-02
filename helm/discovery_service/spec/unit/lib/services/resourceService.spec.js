@@ -517,7 +517,7 @@ describe('discovery-service/lib/services/resourceService', () => {
             id: '2a5ad06f-2e15-4fcf-9ff5-584e9570fc54',
             practitionerRole: [
               {
-                managingOrganisation: {
+                managingOrganization: {
                   reference: 'Organization/f34c12b1-749e-4c26-9621-a986d67ecd44'
                 }
               }
@@ -543,7 +543,7 @@ describe('discovery-service/lib/services/resourceService', () => {
             id: '2a5ad06f-2e15-4fcf-9ff5-584e9570fc54',
             practitionerRole: [
               {
-                managingOrganisation: {
+                managingOrganization: {
                   reference: 'Organization/f34c12b1-749e-4c26-9621-a986d67ecd44'
                 }
               }
@@ -569,7 +569,7 @@ describe('discovery-service/lib/services/resourceService', () => {
             id: '2a5ad06f-2e15-4fcf-9ff5-584e9570fc54',
             practitionerRole: [
               {
-                managingOrganisation: {
+                managingOrganization: {
                   reference: 'Organization/f34c12b1-749e-4c26-9621-a986d67ecd44'
                 }
               }
@@ -595,7 +595,7 @@ describe('discovery-service/lib/services/resourceService', () => {
             id: '2a5ad06f-2e15-4fcf-9ff5-584e9570fc54',
             practitionerRole: [
               {
-                managingOrganisation: {
+                managingOrganization: {
                   reference: 'Organization/f34c12b1-749e-4c26-9621-a986d67ecd44',
                 }
               }

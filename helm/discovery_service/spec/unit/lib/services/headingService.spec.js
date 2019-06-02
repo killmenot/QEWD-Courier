@@ -139,31 +139,149 @@ describe('discovery-service/lib/services/headingService', () => {
       heading = 'allergies';
     });
 
-    it('should return heading summary', () => {
+    it('should return heading summary (pulsetile format)', () => {
       const expected = [
         {
-          cause: 'AGENT_VALUE_1',
-          causeCode: 'AGENT_CODE_1',
-          causeTerminology: 'AGENT_TERMINOLOGY_1',
-          terminologyCode: 'MANIFESTATION_CODE_1',
-          reaction: 'MANIFESTATION_VALUE_1',
-          author: 'Dr Tony Shannon',
+          cause: 'Adverse reaction caused by lysergide (disorder)',
+          causeCode: '218792001',
+          causeTerminology: 'http://snomed.info/sct',
+          terminologyCode: '',
+          reaction: 'Adverse reaction caused by lysergide (disorder)',
+          author: 'Jane Doe',
           dateCreated: '2018-01-01T12:00:00Z',
-          source: 'etheris',
-          sourceId: 'etheris-188a6bbe-d823-4fca-a79f-11c64af5c2e6',
+          source: 'Discovery',
+          sourceId: 'Discovery-AllergyIntolerance_45e32056-754c-43e9-a7f7-caf1540f0b8b',
           patientId: 9999999000
         },
         {
-          cause: 'AGENT_VALUE_2',
-          causeCode: 'AGENT_CODE_2',
-          causeTerminology: 'AGENT_TERMINOLOGY_2',
-          terminologyCode: 'MANIFESTATION_CODE_2',
-          reaction: 'MANIFESTATION_VALUE_2',
-          author: 'Dr Tony Shannon',
+          cause: 'Allergy to strawberries (disorder)',
+          causeCode: '91938006',
+          causeTerminology: 'http://snomed.info/sct',
+          terminologyCode: '',
+          reaction: 'Allergy to strawberries (disorder)',
+          author: 'Judy Doe',
           dateCreated: '2018-02-02T12:00:00Z',
-          source: 'etheris',
-          sourceId: 'etheris-076d7614-9903-4051-8aea-9648a21e02f2',
+          source: 'Discovery',
+          sourceId: 'Discovery-AllergyIntolerance_cac43ad0-1bc7-47d8-be57-84392fdcfcd3',
           patientId: 9999999000
+        },
+      ];
+
+      const resources = [
+        {
+          id: '45e32056-754c-43e9-a7f7-caf1540f0b8b',
+          practitionerName: 'Dr Tony Shannon',
+          nhsNumber: '9999999000',
+          recordedDate: '2018-01-01T12:00:00Z',
+          substance: {
+            coding: [
+              {
+                system: 'http://snomed.info/sct',
+                display: 'Adverse reaction caused by lysergide (disorder)',
+                code: '218792001'
+              }
+            ]
+          }
+        },
+        {
+          id: 'cac43ad0-1bc7-47d8-be57-84392fdcfcd3',
+          practitionerName: 'Dr Tony Shannon',
+          nhsNumber: '9999999000',
+          recordedDate: '2018-02-02T12:00:00Z',
+          substance: {
+            coding: [
+              {
+                system: 'http://snomed.info/sct',
+                display: 'Allergy to strawberries (disorder)',
+                code: '91938006'
+              }
+            ]
+          }
+        }
+      ];
+      const practitioners = [
+        {
+          name: {
+            text: 'Jane Doe'
+          }
+        },
+        {
+          name: {
+            text: 'Judy Doe'
+          }
+        }
+      ];
+
+      patientCache.byResource.getUuidsByResourceName.and.returnValue([
+        'c8e4606d-e59e-4863-843a-5e66deb2e841',
+        '2ebc4af8-e0d5-41fd-b32b-52af5c678fec'
+      ]);
+      resourceCache.byUuid.get.and.returnValues(...resources);
+      resourceService.getPractitioner.and.returnValues(...practitioners);
+
+      const actual = headingService.getSummary(nhsNumber, heading);
+
+      expect(patientCache.byResource.getUuidsByResourceName).toHaveBeenCalledWith(9999999000, 'AllergyIntolerance');
+
+      expect(resourceCache.byUuid.get).toHaveBeenCalledTimes(2);
+      expect(resourceCache.byUuid.get.calls.argsFor(0)).toEqual(['AllergyIntolerance', 'c8e4606d-e59e-4863-843a-5e66deb2e841']);
+      expect(resourceCache.byUuid.get.calls.argsFor(1)).toEqual(['AllergyIntolerance', '2ebc4af8-e0d5-41fd-b32b-52af5c678fec']);
+
+
+      expect(resourceService.getPractitioner).toHaveBeenCalledTimes(2);
+      expect(resourceService.getPractitioner.calls.argsFor(0)).toEqual(['AllergyIntolerance', 'c8e4606d-e59e-4863-843a-5e66deb2e841']);
+      expect(resourceService.getPractitioner.calls.argsFor(1)).toEqual(['AllergyIntolerance', '2ebc4af8-e0d5-41fd-b32b-52af5c678fec']);
+
+      expect(actual).toEqual(expected);
+    });
+
+    it('should return heading summary (unknown)', () => {
+      const expected = [
+        {
+          composer: {
+            value: 'Jane Doe'
+          },
+          host: 'Discovery',
+          uid: 'AllergyIntolerance_',
+          patientId: 9999999000,
+          date_created: '',
+          allergies_and_adverse_reactions: {
+            adverse_reaction_risk: {
+              causative_agent: {
+                value: '',
+                code: '',
+                terminology: ''
+              },
+              reaction_details: {
+                manifestation: {
+                  value: ''
+                }
+              }
+            }
+          }
+        },
+        {
+          composer: {
+            value: 'Judy Doe'
+          },
+          host: 'Discovery',
+          uid: 'AllergyIntolerance_',
+          patientId: 9999999000,
+          date_created: '',
+          allergies_and_adverse_reactions: {
+            adverse_reaction_risk: {
+              causative_agent: {
+                value: '',
+                code: '',
+                terminology: ''
+              },
+              reaction_details: {
+                manifestation: {
+                  value: ''
+                }
+              }
+            }
+          }
         }
       ];
 
@@ -237,7 +355,8 @@ describe('discovery-service/lib/services/headingService', () => {
       resourceCache.byUuid.get.and.returnValues(...resources);
       resourceService.getPractitioner.and.returnValues(...practitioners);
 
-      const actual = headingService.getSummary(nhsNumber, heading);
+      const format = 'unknown';
+      const actual = headingService.getSummary(nhsNumber, heading, format);
 
       expect(patientCache.byResource.getUuidsByResourceName).toHaveBeenCalledWith(9999999000, 'AllergyIntolerance');
 
