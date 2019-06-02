@@ -34,7 +34,7 @@ const { OpenEhrAdapter } = require('@lib/core');
 const jumper = require('@lib/jumper');
 const JumperService = require('@lib/services/jumperService');
 
-describe('lib/services/jumperService', () => {
+describe('openehr-service/lib/services/jumperService', () => {
   let ctx;
   let jumperService;
 

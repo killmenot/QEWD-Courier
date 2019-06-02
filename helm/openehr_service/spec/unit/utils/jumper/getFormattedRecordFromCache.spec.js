@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -32,7 +32,7 @@
 const { Worker, rewritePaths } = require('@tests/mocks');
 const getFormattedRecordFromCache = require('@jumper/getFormattedRecordFromCache');
 
-describe('utils/jumper/lib/getFormattedRecordFromCache', () => {
+describe('openehr-service/utils/jumper/lib/getFormattedRecordFromCache', () => {
   let q;
 
   let sourceId;

@@ -34,7 +34,7 @@ const { BadRequestError } = require('@lib/errors');
 const { Role } = require('@lib/shared/enums');
 const { GetPatientHeadingSummaryCommand } = require('@lib/commands');
 
-describe('lib/commands/getPatientHeadingSummary', () => {
+describe('openehr-service/lib/commands/getPatientHeadingSummary', () => {
   let ctx;
   let session;
 

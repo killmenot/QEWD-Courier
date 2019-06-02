@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 May 2019
+  02 June 2019
 
 */
 
@@ -32,7 +32,7 @@
 const { ExecutionContextMock } = require('@tests/mocks');
 const { MergeDiscoveryDataCommand } = require('@lib/commands');
 
-describe('lib/commands/mergeDiscoveryData', () => {
+describe('openehr-service/lib/commands/mergeDiscoveryData', () => {
   let ctx;
   let session;
 

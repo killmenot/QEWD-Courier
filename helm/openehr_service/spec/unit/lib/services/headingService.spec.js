@@ -33,7 +33,7 @@ const { ExecutionContextMock } = require('@tests/mocks');
 const { NotFoundError, UnprocessableEntityError } = require('@lib/errors');
 const HeadingService = require('@lib/services/headingService');
 
-describe('lib/services/headingService', () => {
+describe('openehr-service/lib/services/headingService', () => {
   let ctx;
   let headingService;
 

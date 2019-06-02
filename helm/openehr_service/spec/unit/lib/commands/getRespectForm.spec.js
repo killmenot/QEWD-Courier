@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  17 April 2019
+  02 June 2019
 
 */
 
@@ -34,7 +34,7 @@ const { BadRequestError } = require('@lib/errors');
 const { Role } = require('@lib/shared/enums');
 const { GetRespectFormCommand } = require('@lib/commands');
 
-describe('lib/commands/getRespectForm', () => {
+describe('openehr-service/lib/commands/getRespectForm', () => {
   let ctx;
   let session;
 

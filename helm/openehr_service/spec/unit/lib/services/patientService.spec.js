@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  17 April 2019
+  02 June 2019
 
 */
 
@@ -33,7 +33,7 @@ const { ExecutionContextMock } = require('@tests/mocks');
 const { EhrIdNotFoundError } = require('@lib/errors');
 const PatientService = require('@lib/services/patientService');
 
-describe('lib/services/patientService', () => {
+describe('openehr-service/lib/services/patientService', () => {
   let ctx;
   let patientService;
 

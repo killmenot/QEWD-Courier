@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -34,7 +34,7 @@ const config = require('@lib/config');
 const { EhrSessionError } = require('@lib/errors');
 const EhrSessionService = require('@lib/services/ehrSessionService');
 
-describe('lib/services/ehrSessionService', () => {
+describe('openehr-service/lib/services/ehrSessionService', () => {
   let ctx;
   let nowTime;
   let ehrSessionService;

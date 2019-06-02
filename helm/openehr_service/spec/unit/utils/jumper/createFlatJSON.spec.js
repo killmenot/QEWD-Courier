@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -31,7 +31,7 @@
 
 const createFlatJSON = require('@jumper/createFlatJSON');
 
-describe('utils/jumper/lib/createFlatJSON', () => {
+describe('openehr-service/utils/jumper/lib/createFlatJSON', () => {
   let metaDataArray;
 
   it('should return correct flat json when metaDataArray is empty array', () => {

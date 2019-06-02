@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  9 April 2019
+  02 June 2019
 
 */
 
@@ -32,7 +32,7 @@
 const { ExecutionContextMock } = require('@tests/mocks');
 const PhrFeedDb = require('@lib/db/phrFeedDb');
 
-describe('lib/db/phrFeedDb', () => {
+describe('openehr-service/lib/db/phrFeedDb', () => {
   let ctx;
   let phrFeedDb;
   let phrFeeds;

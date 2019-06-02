@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  10 April 2019
+  02 June 2019
 
 */
 
@@ -33,7 +33,7 @@ const mockery = require('mockery');
 const { ExecutionContext } = require('@lib/core');
 const { CommandMock, Worker } = require('@tests/mocks');
 
-describe('apis/getPatientTop3ThingsHscnDetail', () => {
+describe('openehr-service/apis/getPatientTop3ThingsHscnDetail', () => {
   let q;
   let args;
   let finished;

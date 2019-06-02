@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -31,7 +31,7 @@
 
 const mapRawJSON = require('@jumper/mapRawJSON');
 
-describe('utils/jumper/lib/mapRawJSON', () => {
+describe('openehr-service/utils/jumper/lib/mapRawJSON', () => {
   let params;
 
   beforeEach(() => {

@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -35,7 +35,7 @@ const mockery = require('mockery');
 const { Worker, rewritePaths } = require('@tests/mocks');
 const openEHR = require('@openehr/openEHR');
 
-describe('utils/jumper/lib/getHeadingFromOpenEHRServer', () => {
+describe('openehr-service/utils/jumper/lib/getHeadingFromOpenEHRServer', () => {
   let q;
   let qewdSession;
   let aql;

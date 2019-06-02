@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -35,7 +35,7 @@ const fs = require('fs-extra');
 const fsMock = require('mock-fs');
 const { Worker, rewritePaths } = require('@tests/mocks');
 
-describe('utils/jumper/lib/processWebTemplate', () => {
+describe('openehr-service/utils/jumper/lib/processWebTemplate', () => {
   let processWebTemplate;
 
   let parseWebTemplate;

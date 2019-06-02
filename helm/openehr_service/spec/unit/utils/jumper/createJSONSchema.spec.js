@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -31,7 +31,7 @@
 
 const mockery = require('mockery');
 
-describe('utils/jumper/lib/createJSONSchema', () => {
+describe('openehr-service/utils/jumper/lib/createJSONSchema', () => {
   let createJSONSchema;
   let buildJsonFile;
 

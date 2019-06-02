@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  18 April 2019
+  02 June 2019
 
 */
 
@@ -33,7 +33,7 @@ const { ExecutionContextMock } = require('@tests/mocks');
 const { NotFoundError, UnprocessableEntityError } = require('@lib/errors');
 const RespectFormsService = require('@lib/services/respectFormsService');
 
-describe('lib/services/respectFormsService', () => {
+describe('openehr-service/lib/services/respectFormsService', () => {
   let ctx;
   let respectFormsService;
 

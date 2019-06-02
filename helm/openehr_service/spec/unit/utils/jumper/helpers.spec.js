@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -31,7 +31,7 @@
 
 const helpers = require('@jumper/helpers');
 
-describe('utils/jumper/lib/helpers', () => {
+describe('openehr-service/utils/jumper/lib/helpers', () => {
 
   describe('#getStartDateTime', () => {
     it('should return date in Europe/London timezone', () => {

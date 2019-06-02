@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -33,7 +33,7 @@ const transform = require('qewd-transform-json').transform;
 const { headingHelpers } = require('@lib/shared/headings');
 const { flatten } = require('@lib/shared/utils');
 
-describe('headings', () => {
+describe('openehr-service/headings', () => {
   const host = 'marand';
   const headings = [
     'allergies',

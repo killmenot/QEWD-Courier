@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -32,7 +32,7 @@
 const { Worker } = require('@tests/mocks');
 const addPatientDataToCache = require('@jumper/addPatientDataToCache');
 
-describe('utils/jumper/lib/addPatientDataToCache', () => {
+describe('openehr-service/utils/jumper/lib/addPatientDataToCache', () => {
   let q;
   let results;
   let patientId;

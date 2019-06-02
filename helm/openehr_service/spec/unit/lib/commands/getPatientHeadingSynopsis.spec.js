@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  17 April 2019
+  02 June 2019
 
 */
 
@@ -34,7 +34,7 @@ const { BadRequestError } = require('@lib/errors');
 const { Role, Heading } = require('@lib/shared/enums');
 const { GetPatientHeadingSynopsisCommand } = require('@lib/commands');
 
-describe('lib/commands/getPatientHeadingSynopsis', () => {
+describe('openehr-service/lib/commands/getPatientHeadingSynopsis', () => {
   let ctx;
   let session;
 

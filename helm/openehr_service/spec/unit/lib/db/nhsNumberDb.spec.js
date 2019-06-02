@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  02 June 2019
 
 */
 
@@ -32,7 +32,7 @@
 const { ExecutionContextMock } = require('@tests/mocks');
 const NhsNumberDb = require('@lib/db/nhsNumberDb');
 
-describe('lib/db/nhsNumberDb', () => {
+describe('openehr-service/lib/db/nhsNumberDb', () => {
   let ctx;
   let nhsNumberDb;
   let nhsNoMap;
