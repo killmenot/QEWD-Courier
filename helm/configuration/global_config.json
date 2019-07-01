@@ -55,8 +55,8 @@
     },
     "transformations": {
       "pulsetile": {
-        "source": "openEHR",
-        "destination": "Pulsetile"
+        "source": "openehr",
+        "destination": "pulsetile"
       },
       "defaults": {
         "source": "discovery",
