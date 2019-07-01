@@ -28,10 +28,6 @@ coverage:
 	$(NYC) report --reporter=lcov --reporter=text
 
 coveralls:
-	$(NYC) report --reporter=text-lcov | coveralls
-
-
+	$(NYC) report --reporter=text-lcov | $(COVERALLS)
 
 .PHONY: clean install lint test coverage coveralls
-
-# "coveralls": "nyc report --reporter=text-lcov | coveralls"

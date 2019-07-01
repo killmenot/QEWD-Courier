@@ -11,3 +11,6 @@ before_script:
   - export TZ=Europe/London
 script:
   - make test
+after_success:
+  - make coverage
+  - make coveralls
