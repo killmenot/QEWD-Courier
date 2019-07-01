@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  9 April 2019
+  2 June 2019
 
 */
 
@@ -34,7 +34,7 @@ const { uuidV4Regex } = require('@tests/helpers/utils');
 const { NotFoundError } = require('@lib/errors');
 const PhrFeedService = require('@lib/services/phrFeedService');
 
-describe('lib/services/phrFeedService', () => {
+describe('openehr-service/lib/services/phrFeedService', () => {
   let ctx;
   let phrFeedService;
 

@@ -1,15 +1,15 @@
 /*
 
  ----------------------------------------------------------------------------
- | qewd-ripple: QEWD-based Middle Tier for Ripple OSI                       |
+ | ripple-phr-openehr: Ripple MicroServices for OpenEHR                     |
  |                                                                          |
- | Copyright (c) 2016-17 Ripple Foundation Community Interest Company       |
+ | Copyright (c) 2018 Ripple Foundation Community Interest Company          |
  | All rights reserved.                                                     |
  |                                                                          |
  | http://rippleosi.org                                                     |
  | Email: code.custodian@rippleosi.org                                      |
  |                                                                          |
- | Author: Dinesh Patel - Leidos                                            |
+ | Author: Rob Tweed, M/Gateway Developments Ltd                            |
  |                                                                          |
  | Licensed under the Apache License, Version 2.0 (the "License");          |
  | you may not use this file except in compliance with the License.         |
@@ -24,10 +24,11 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-10 April 2017
+  2 June 2019
 
 */
-var dateTime = require('../../lib/shared/dateTime');
+
+const dateTime = require('../../lib/shared/dateTime');
 
 module.exports = {
   name: 'mdtreports',
@@ -51,13 +52,13 @@ module.exports = {
   },
   post: {
     templateId: 'IDCR - Minimal MDT Output Report.v0',
-    
+
     helperFunctions: {
       formatDate: function(date) {
         return dateTime.format(new Date(date));
       }
     },
-    
+
     transformTemplate: {
       ctx: {
         composer_name:               '=> either(author, "Dr Tony Shannon")',

@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  2 June 2019
 
 */
 
@@ -36,7 +36,7 @@ const StatMode = require('stat-mode');
 const { rewritePaths, Worker } = require('@tests/mocks');
 const buildJsonFile = require('@jumper/buildJsonFile');
 
-describe('utils/jumper/lib/buildJsonFile', () => {
+describe('openehr-service/utils/jumper/lib/buildJsonFile', () => {
   let q;
 
   let contentsObj;

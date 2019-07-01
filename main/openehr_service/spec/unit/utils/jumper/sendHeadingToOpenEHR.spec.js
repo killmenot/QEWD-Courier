@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 May 2019
+  2 June 2019
 
 */
 
@@ -33,7 +33,7 @@ const nock = require('nock');
 const { Worker, rewritePaths } = require('@tests/mocks');
 const sendHeadingToOpenEHR = require('@jumper/sendHeadingToOpenEHR');
 
-describe('utils/jumper/lib/sendHeadingToOpenEHR', () => {
+describe('openehr-service/utils/jumper/lib/sendHeadingToOpenEHR', () => {
   let q;
   let params;
   let callback;

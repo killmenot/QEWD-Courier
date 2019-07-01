@@ -40,21 +40,19 @@ class SeedDispatcher {
   constructor(q) {
     this.q = q;
   }
-  
+
   /**
    * Gets discovery data
    *
    * @private
    * @param  {string|int} patientId
    * @param  {string} heading
-   * @param  {string} jwt
-   * @param  {Function} forward
    * @return {Promise.<Object>}
    */
-  async getDiscoveryDataFromJson(patientId, heading, jwt, forward) {
-    
-    logger.info('dispatchers/seedDispatcher|getDiscoveryDataFromJson', { patientId, heading });
-  
+  async getDiscoveryData(patientId, heading) {
+
+    logger.info('dispatchers/seedDispatcher|getDiscoveryData', { patientId, heading });
+
     if (heading === ExtraHeading.FINISHED) {
           return {
             message: {
@@ -63,7 +61,7 @@ class SeedDispatcher {
             }
           };
         }
-    
+
     return new Promise((resolve, reject) => {
       if (heading === ExtraHeading.FINISHED) {
         return resolve({
@@ -83,13 +81,13 @@ class SeedDispatcher {
           v.patientId = patientId;
           return v;
         });
-        
+
         return resolve(headingData);
       });
-      
+
     });
   }
-  
+
   /**
    * Merge discovery data in worker process
    *
@@ -102,8 +100,8 @@ class SeedDispatcher {
    */
   async mergeDiscoveryData(patientId, heading, data, jwt) {
     logger.info('dispatchers/seedDispatcher|mergeDiscoveryData', { patientId, heading, data });
-    
-    
+
+
     return new Promise((resolve, reject) => {
       const token = this.q.jwt.handlers.getProperty('uid', jwt);
       const messageObj = {
@@ -122,58 +120,55 @@ class SeedDispatcher {
         patientId: patientId,
         token: token
       };
-      
+
       logger.debug('message: %j', messageObj);
-      
+
       this.q.handleMessage(messageObj, (responseObj) => {
         logger.debug('heading %s has been merged into EtherCIS', heading);
         if (responseObj.error) return reject(responseObj);
-        
+
         return resolve(responseObj.message);
       });
     });
   }
-  
+
   /**
-   * Sync single heading data using discovery microservice
-   *
+   * Sync single heading data using predefined seeds
    * @private
    * @param  {array} nhsNumbers
    * @param  {string} heading
    * @param  {string} jwt
-   * @param  {Function} forward
    * @return {Promise}
    */
-  async sync(nhsNumbers, heading, jwt, forward) {
+  async sync(nhsNumbers, heading, jwt) {
     logger.info('dispatchers/seedDispatcher|sync', { nhsNumbers, heading });
-    
+
     try {
       await P.each(nhsNumbers, async (x) => {
-        const discoveryData = await this.getDiscoveryDataFromJson(x.nhsNumber, heading, jwt, forward);
+        const discoveryData = await this.getDiscoveryData(x.nhsNumber, heading);
         await this.mergeDiscoveryData(x.nhsNumber, heading, discoveryData, jwt);
       });
     } catch (err) {
       logger.error('dispatchers/seedDispatcher|sync|err:', err);
     }
   }
-  
+
   /**
-   * Dispatches sync all headings data using discovery microservice
+   * Dispatches sync all headings data using predefined seeds
    *
    * @public
    * @param  {array} nhsNumbers
    * @param  {string[]} headings
    * @param  {string} jwt
-   * @param  {Function} forward
    * @return {Promise}
    */
-  async syncAll(nhsNumbers, headings, jwt, forward) {
+  async syncAll(nhsNumbers, headings, jwt) {
     logger.info('dispatchers/seedDispatcher|syncAll', { nhsNumbers, headings, jwt });
-    
+
     // handle each heading one at a time in sequence - this serialised processing
     // prevents EtherCIS being overwhelmed with API requests
-    
-    await P.each(headings, (heading) => this.sync(nhsNumbers, heading, jwt, forward));
+
+    await P.each(headings, (heading) => this.sync(nhsNumbers, heading, jwt));
     logger.info('discovery data loaded into EtherCIS');
   }
 }

@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 May 2019
+  2 June 2019
 
 */
 
@@ -34,7 +34,7 @@ const { BadRequestError } = require('@lib/errors');
 const { Role } = require('@lib/shared/enums');
 const CheckNhsNumberCommand = require('@lib/commands/checkNhsNumber');
 
-describe('lib/commands/checkNhsNumber', () => {
+describe('openehr-service/lib/commands/checkNhsNumber', () => {
   let ctx;
   let session;
 

@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  2 June 2019
 
 */
 
@@ -32,7 +32,7 @@
 const { ExecutionContextMock } = require('@tests/mocks');
 const { RevertAllDiscoveryDataCommand } = require('@lib/commands');
 
-describe('lib/commands/revertAllDiscoveryData', () => {
+describe('openehr-service/lib/commands/revertAllDiscoveryData', () => {
   let ctx;
 
   let discoveryService;

@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  2 June 2019
 
 */
 
@@ -33,7 +33,7 @@ const { ExecutionContext } = require('@lib/core');
 const { Worker } = require('@tests/mocks');
 const beforeHandler = require('@apis/beforeHandler');
 
-describe('apis/beforeHandler', () => {
+describe('openehr-service/apis/beforeHandler', () => {
   let q;
   let req;
   let finished;

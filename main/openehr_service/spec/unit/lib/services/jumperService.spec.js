@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  2 June 2019
 
 */
 
@@ -34,7 +34,7 @@ const { OpenEhrAdapter } = require('@lib/core');
 const jumper = require('@lib/jumper');
 const JumperService = require('@lib/services/jumperService');
 
-describe('lib/services/jumperService', () => {
+describe('openehr-service/lib/services/jumperService', () => {
   let ctx;
   let jumperService;
 
@@ -328,7 +328,9 @@ describe('lib/services/jumperService', () => {
           heading: 'procedures',
           compositionId: '0f7192e9-168e-4dea-812a-3e1d236ae46d::vm01.ethercis.org::1',
           data: {
-            foo: 'bar'
+            data: {
+              foo: 'bar'
+            }
           },
           method: 'put',
           qewdSession: ctx.qewdSession

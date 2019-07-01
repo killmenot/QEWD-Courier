@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  2 June 2019
 
 */
 
@@ -31,7 +31,7 @@
 
 const tools = require('@openehr/tools');
 
-describe('utils/openehr/tools', () => {
+describe('openehr-service/utils/openehr/tools', () => {
   describe('#isPatientIdValid', () => {
     it('should return patientId must be defined', () => {
       const expected = {

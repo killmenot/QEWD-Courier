@@ -1,23 +1,24 @@
 {
-  "name": "@helm/openehr-service",
+  "name": "@qewd-courier/openehr-service",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "scripts": {
     "lint": "eslint apis headings lib spec utils/openehr --fix",
-    "test": "NODE_ENV=test jasmine --config=spec/support/jasmine.json",
-    "test:debug": "DEBUG=helm:openehr* jasmine --config=spec/support/jasmine.json",
-    "coverage": "nyc --reporter=html --reporter=text npm test",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "TZ=UTC NODE_ENV=test jasmine --config=spec/support/jasmine.json",
+    "coverage": "nyc --reporter=html --reporter=text npm test"
   },
   "dependencies": {
     "bluebird": "^3.5.4",
     "fast-safe-stringify": "^2.0.6",
     "fs-extra": "^7.0.1",
+    "jsonschema": "^1.2.4",
     "moment-timezone": "^0.5.23",
+    "object-path": "^0.11.4",
     "qewd-router": "^1.13.1",
     "qewd-template": "^1.1.2",
     "qewd-transform-json": "^1.10.1",
     "request": "^2.88.0",
+    "traverse": "^0.6.6",
     "valid-url": "^1.0.9",
     "winston": "^3.2.1"
   },

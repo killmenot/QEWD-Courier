@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  2 June 2019
 
 */
 
@@ -31,7 +31,7 @@
 
 const mockery = require('mockery');
 
-describe('utils/jumper/lib/buildPulsetileToOpenEHR', () => {
+describe('openehr-service/utils/jumper/lib/buildPulsetileToOpenEHR', () => {
   let buildPulsetileToOpenEHR;
   let buildInverse;
 

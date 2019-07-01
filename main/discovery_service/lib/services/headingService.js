@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  13 February 2018
+  2 June 2019
 
 */
 
@@ -91,10 +91,10 @@ class HeadingService {
    */
   getSummary(nhsNumber, heading, format = ResourceFormat.PULSETILE) {
     logger.info('services/headingService|getSummary', { nhsNumber, heading, format });
-  
+
     const resourceName = this.ctx.headingsConfig[heading];
-  
-    let { source, destination } = this.ctx.getTransformationConfig();
+
+    const { source, destination } = this.ctx.getTransformationConfig();
     const template = getHeadingTemplate(heading, source, destination);
     const helpers = headingHelpers();
 
@@ -115,7 +115,7 @@ class HeadingService {
 
       let result = transform(template, resource, helpers);
       if (format === ResourceFormat.PULSETILE) {
-        let { source, destination } = this.ctx.getTransformationConfig(format);
+        const { source, destination } = this.ctx.getTransformationConfig(format);
         const template = getHeadingTemplate(heading, source, destination);
         result = transform(template, result, helpers);
       }

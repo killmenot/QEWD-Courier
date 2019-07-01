@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  2 June 2019
 
 */
 
@@ -31,7 +31,7 @@
 
 const parseWebTemplate = require('@jumper/parseWebTemplate');
 
-describe('utils/jumper/lib/parseWebTemplate', () => {
+describe('openehr-service/utils/jumper/lib/parseWebTemplate', () => {
   let templateObj;
   let platform;
 

@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 May 2019
+  2 June 2019
 
 */
 
@@ -35,7 +35,7 @@ const { Worker } = require('@tests/mocks');
 const { getHeadingQuery } = require('@lib/shared/headings');
 const fetchAndCacheHeading = require('@openehr/fetchAndCacheHeading');
 
-describe('utils/openehr/fetchAndCacheHeading', () => {
+describe('openehr-service/utils/openehr/fetchAndCacheHeading', () => {
   let q;
   let patientId;
   let heading;

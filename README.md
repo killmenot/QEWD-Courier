@@ -1,5 +1,8 @@
 # QEWD-Courier-QUp
 
+[![Build Status](https://travis-ci.org/killmenot/QEWD-Courier.svg?branch=develop)](https://travis-ci.org/killmenot/QEWD-Courier)
+[![Coverage Status](https://coveralls.io/repos/github/killmenot/QEWD-Courier/badge.svg?branch=develop)](https://coveralls.io/github/killmenot/QEWD-Courier?branch=develop)
+
 ## QEWD-Up Version of QEWD Courier
 
 Notes and Installation Instructions

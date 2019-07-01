@@ -24,9 +24,11 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  12 February 2019
+  2 June 2019
 
 */
+
+/*global formatDate */
 
 'use strict';
 
@@ -37,12 +39,12 @@ function getHeadingTemplate(headingName, source, destination) {
 function headingHelpers() {
   const helpers = {
     getStartDateTime: function(date, time) {
-      console.log('getStartDateTime: ' + date + '; ' + time);
+      // console.log('getStartDateTime: ' + date + '; ' + time);
       return formatDate(new Date(date + time));
     },
     msAfterMidnight: function(date) {
       var e = new Date(date);
-      console.log('\n msAfterMidnight: e.setHours(0,0,0,0) = ' + e.setHours(0,0,0,0) + '; e = ' + e.getTime());
+      // console.log('\n msAfterMidnight: e.setHours(0,0,0,0) = ' + e.setHours(0,0,0,0) + '; e = ' + e.getTime());
       return e.getTime() - e.setHours(0,0,0,0);
     },
     fhirDateTime: function(d) {
@@ -52,17 +54,23 @@ function headingHelpers() {
       return name + 'Route: ' + route + '; Dose: ' + doseAmount + '; Timing: ' + doseTiming;
     },
     fromNarrative: function(text) {
+      var pieces;
+      var dose;
+
       if (text.indexOf(' - ') !== -1) {
-        var pieces = text.split(' - ');
+        pieces = text.split(' - ');
         if (!pieces[1]) return '';
         if (!pieces[2]) return pieces[1];
-        var dose = pieces[2].split(' ')[0];
+        dose = pieces[2].split(' ')[0];
+
         return dose;
         //return pieces[1] + ' - ' + pieces[2];
       }
-      var pieces = text.split('; Dose: ');
+
+      pieces = text.split('; Dose: ');
       if (!pieces[1]) return '';
-      var dose = pieces[1].split('; Timing: ')[0];
+      dose = pieces[1].split('; Timing: ')[0];
+
       return dose;
     },
     toInteger: function(input) {
@@ -83,8 +91,8 @@ function headingHelpers() {
       return input.split(prefix + '/')[1];
     },
     useSnomed: function(arr, property) {
-      console.log('*!*!*!* using useSnomed function for ' + property + ' with arr ' + JSON.stringify(arr));
-      
+      // console.log('*!*!*!* using useSnomed function for ' + property + ' with arr ' + JSON.stringify(arr));
+
       var obj;
       var value = '';
       for (var i = 0; i < arr.length; i++) {
@@ -123,7 +131,7 @@ function headingHelpers() {
       // if value property defined, but neither code nor terminology are defined, then return the
       //  value and make sure it can't be used for the |value Flat JSON field that will follow in the
       //  template
-      
+
       if (typeof inputObj === 'string') {
         if (inputObj === '') {
           return '<!delete>';
@@ -171,7 +179,6 @@ function headingHelpers() {
         dlim = '; ';
       }
       if (note !== '') {
-        console.log(note);
         if (Array.isArray(note)) {
           note.forEach(function(instance) {
             value = value + dlim + instance.text;
@@ -187,7 +194,7 @@ function headingHelpers() {
       return value;
     }
   };
-  
+
   return helpers;
 }
 

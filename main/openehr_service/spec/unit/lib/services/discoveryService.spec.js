@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  2 June 2019
 
 */
 
@@ -32,7 +32,7 @@
 const { ExecutionContextMock } = require('@tests/mocks');
 const DiscoveryService = require('@lib/services/discoveryService');
 
-describe('lib/services/discoveryService', () => {
+describe('openehr-service/lib/services/discoveryService', () => {
   let ctx;
   let discoveryService;
 

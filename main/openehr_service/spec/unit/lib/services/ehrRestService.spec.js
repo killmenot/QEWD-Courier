@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 May 2019
+  2 June 2019
 
 */
 
@@ -33,7 +33,7 @@ const nock = require('nock');
 const { ExecutionContextMock } = require('@tests/mocks');
 const EhrRestService = require('@lib/services/ehrRestService');
 
-describe('lib/services/ehrRestService', () => {
+describe('openehr-service/lib/services/ehrRestService', () => {
   let ctx;
 
   let host;

@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  9 April 2019
+  2 June 2019
 
 */
 
@@ -33,7 +33,7 @@ const { ExecutionContextMock } = require('@tests/mocks');
 const { BadRequestError } = require('@lib/errors');
 const { PostFeedCommand } = require('@lib/commands');
 
-describe('lib/commands/postFeed', () => {
+describe('openehr-service/lib/commands/postFeed', () => {
   let ctx;
   let session;
   let payload;

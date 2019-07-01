@@ -1,15 +1,13 @@
 {
-  "name": "ripple-cdr-discovery",
+  "name": "@qewd-courier/discovery-service",
   "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "license": "Apache-2.0",
   "scripts": {
     "lint": "eslint apis lib spec --fix",
-    "test": "jasmine --config=spec/support/jasmine.json",
-    "test:debug": "DEBUG=ripple-cdr-discovery* jasmine --config=spec/support/jasmine.json",
-    "coverage": "nyc --reporter=html --reporter=text jasmine --config=spec/support/jasmine.json",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "TZ=UTC jasmine --config=spec/support/jasmine.json",
+    "coverage": "nyc --reporter=html --reporter=text jasmine --config=spec/support/jasmine.json"
   },
   "_moduleAliases": {
     "@apis": "apis",

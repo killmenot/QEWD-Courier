@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 April 2019
+  2 June 2019
 
 */
 
@@ -310,15 +310,15 @@ class HeadingService {
       return {
         sourceId: sourceId,
         source: responseObj.source,
-        text: responseObj[synopsisField] || '',
-        dateCreated: responseObj.dateCreated
+        dateCreated: responseObj.dateCreated || '',
+        text: responseObj[synopsisField] || ''
       };
     }
 
     // only return the summary headings
     if (format === ResponseFormat.SUMMARY) {
       const resultObj = {};
-      const commonSummaryFields = ['source', 'sourceId'];
+      const commonSummaryFields = ['source', 'sourceId', 'dateCreated'];
 
       [
         ...commonSummaryFields,
@@ -345,10 +345,12 @@ class HeadingService {
     const sourceIds = headingCache.byHost.getAllSourceIds(patientId, heading);
 
     const results = await P.mapSeries(sourceIds, x => this.getBySourceId(x, ResponseFormat.SUMMARY));
+    const resultsSorted = results.sort((n, p) => n.dateCreated - p.dateCreated);
+
     const fetchCount = headingCache.fetchCount.increment(patientId, heading);
 
     return {
-      results,
+      results: resultsSorted,
       fetchCount
     };
   }
@@ -388,11 +390,11 @@ class HeadingService {
     const { headingCache } = this.ctx.cache;
     const sourceIds = headingCache.byDate.getAllSourceIds(patientId, heading, { limit });
 
-    let results = await P.mapSeries(sourceIds, x => this.getBySourceId(x, ResponseFormat.SYNOPSIS));
-    results =  results.sort((n, p) => new Date(n.dateCreated) - new Date(p.dateCreated));
+    const results = await P.mapSeries(sourceIds, x => this.getBySourceId(x, ResponseFormat.SYNOPSIS));
+    const resultsSorted =  results.sort((n, p) => n.dateCreated - p.dateCreated);
 
     return {
-      results
+      results: resultsSorted
     };
   }
 

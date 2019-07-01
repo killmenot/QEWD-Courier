@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 May 2019
+  2 June 2019
 
 */
 
@@ -34,7 +34,7 @@ const nock = require('nock');
 const mockery = require('mockery');
 const { Worker, rewritePaths } = require('@tests/mocks');
 
-describe('utils/jumper/lib/getWebTemplate', () => {
+describe('openehr-service/utils/jumper/lib/getWebTemplate', () => {
   let getWebTemplate;
   let processWebTemplate;
 

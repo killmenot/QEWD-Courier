@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  16 March 2019
+  2 June 2019
 
 */
 
@@ -33,7 +33,7 @@ const { ExecutionContextMock } = require('@tests/mocks');
 const { uuidV4Regex } = require('@tests/helpers/utils');
 const Top3ThingsService = require('@lib/services/top3ThingsService');
 
-describe('lib/services/top3ThingsService', () => {
+describe('openehr-service/lib/services/top3ThingsService', () => {
   let ctx;
   let top3ThingsService;
 

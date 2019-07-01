@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - '12'
+  - '11'
+  - '10'
+  - '9'
+  - '8'
+install:
+  - make install
+before_script:
+  - export TZ=Europe/London
+script:
+  - make test

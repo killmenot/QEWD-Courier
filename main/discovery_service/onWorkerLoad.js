@@ -21,11 +21,11 @@
  | See the License for the specific language governing permissions and      |
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
-  13 February 2019
+  1 July 2019
 */
 
 const global_config = require('/opt/qewd/mapped/configuration/global_config.json');
 
-module.exports = async function (args, finished) {
+module.exports = async function () {
   this.userDefined.globalConfig = global_config
 };

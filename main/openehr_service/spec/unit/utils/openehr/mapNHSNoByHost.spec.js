@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  11 May 2019
+  2 June 2019
 
 */
 
@@ -31,9 +31,9 @@
 
 const nock = require('nock');
 const { Worker } = require('@tests/mocks');
-const mapNHSNoByHost = require('@openehr/mapNhsNoByHost');
+const mapNHSNoByHost = require('@openehr/mapNHSNoByHost');
 
-describe('utils/openehr/mapNHSNoByHost', () => {
+describe('openehr-service/utils/openehr/mapNHSNoByHost', () => {
   let q;
 
   function httpSessionMock(data) {

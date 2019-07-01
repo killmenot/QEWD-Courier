@@ -1,0 +1,16 @@
+{
+  "all": true,
+  "silent": true,
+  "include": [
+    "main/discovery_service/apis/**/*.js",
+    "main/discovery_service/lib/**/*.js",
+    "main/openehr_service/apis/**/*.js",
+    "main/openehr_service/headings/**/*.js",
+    "main/openehr_service/lib/**/*.js",
+    "main/openehr_service/utils/**/*.js"
+  ],
+  "exclude": [
+    "main/openehr_service/lib/jumper/**/*.js",
+    "main/openehr_service/utils/jumper/lib/templateTest.js"
+  ]
+}
